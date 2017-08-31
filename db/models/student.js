@@ -1,7 +1,7 @@
 'use strict';
 var Sequelize = require('sequelize');
 var db = require('../index.js');
-
+var Campus = require('./campus.js');
 
 module.exports = db.define('student', {
   name: {
@@ -15,5 +15,9 @@ module.exports = db.define('student', {
   	validate: {
   		isEmail: true,
   	}
+  }
+}, {
+  defaultScope: {
+    include: [Campus]
   }
 });

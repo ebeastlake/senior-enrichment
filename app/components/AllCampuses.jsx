@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router';
-import {getCampuses} from '../store.js';
+import {getCampuses, destroyCampus} from '../store.js';
 
 function AllCampuses(props) {
 	return (
@@ -30,14 +30,11 @@ function AllCampuses(props) {
 				            <div>
 				              <div className="panel-footer">
 				              	<div className="row">
-					              	<div className="col-xs-6">
-					              		<Link to={`/campus/${campus.id}`}>View campus</Link>
+					              	<div className="col-xs-9">
+					              		<Link to={`/campus/${campus.id}`}>View or edit campus</Link>
 					              	</div>
 					              	<div className="col-xs-3">
-					              		<Link to='/'>Edit</Link>
-					              	</div>
-					              	<div className="col-xs-3">
-					              		<a onClick={props.handleClick}>Delete</a>
+					              		<a onClick={()=>{props.handleDelete(campus.id)}}>Delete</a>
 					              	</div>
 					              </div>
 				              </div>
@@ -80,12 +77,11 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = function(dispatch) {
 	return {
-		handleClick: function(event) {
-			//event.stopPropagation();
-			console.log('Clicked!');
+		handleDelete: function(id) {
 			const result = confirm('Are you sure you want to delete this campus?');
 			if (result) {
-    		console.log('Lets do it!');
+    		const deleteThunk = destroyCampus(id);
+    		dispatch(deleteThunk);
 			}
 		}
 	};

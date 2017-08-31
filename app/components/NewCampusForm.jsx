@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postCampus } from '../store.js';
+import EditCampusForm from './EditCampusForm.jsx';
 
 function NewCampusForm(props) {
 

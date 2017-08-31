@@ -3,8 +3,11 @@ import { withRouter } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import React, { Component} from 'react';
 import AllCampuses from './AllCampuses.jsx';
+import AllStudents from './AllStudents.jsx';
 import NewCampusForm from './NewCampusForm.jsx';
 import SingleCampus from './SingleCampus.jsx';
+import EditStudentForm from './EditStudentForm.jsx';
+import EditCampusForm from './EditCampusForm.jsx';
 import Navbar from './Navbar.jsx'
 import Sidebar from './Sidebar.jsx'
 import Header from './Header.jsx'
@@ -20,6 +23,7 @@ class Root extends Component {
   }
 
 	render() {
+    console.log('in root', Route.path);
 		return (
   			<div>
   				<Navbar />
@@ -27,7 +31,10 @@ class Root extends Component {
       			<Header />
             <Switch>
               <Route exact path="/campus/add" component={NewCampusForm} />
+              <Route exact path="/campus/edit/:id" component={EditCampusForm} />
               <Route exact path="/campus/:id" component={SingleCampus} />
+              <Route exact path="/students" component={AllStudents} />
+              <Route exact path="/student/:id" component={EditStudentForm} />
         			<Route component={AllCampuses} />
             </Switch>
     			</div>

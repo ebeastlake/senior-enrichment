@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import AllStudents from './AllStudents.jsx';
 
 // should there be a current campus?
@@ -16,7 +17,9 @@ function SingleCampus(props) {
 		            <div className="panel-heading">
 		              <div className="row">
 		              	<div className="col-xs-3">
-  							{currentCampus.image}
+  							<div style={{width: '70', height:'70', overflow: 'hidden'}}>
+        						<img style={{width: '100%'}} src={currentCampus.image} />
+      						</div>
 						</div>
 						<div className="col-xs-9 text-right">
   							<h2>{currentCampus.name}</h2>
@@ -24,11 +27,12 @@ function SingleCampus(props) {
 						</div>
 		              </div>
 		            </div>
-		            <a href="#">
 		              <div className="panel-footer">
-		                <div>View campus</div>
+		              	{
+		              		console.log(`/campus/edit/${currentCampus.id}`)
+		              	}
+		              	<Link to={`/campus/edit/${currentCampus.id}`}>Edit campus</Link>
 		              </div>
-		            </a>
 		          </div>
 		        </div>
 		        <div className="col-lg-9 col-md-6 col-sm-6 col-xs-12">
