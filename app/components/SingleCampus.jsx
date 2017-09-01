@@ -8,7 +8,8 @@ import AllStudents from './AllStudents.jsx';
 function SingleCampus(props) {
 	const currentCampus = props.currentCampus;
 
-	console.log('currentCampus in SingleCampus', props.currentCampus)
+	console.log('currentCampus in SingleCampus', props.currentCampus);
+	console.log('currentStudents');
 
 	return (
 			<div className="row">
@@ -32,6 +33,7 @@ function SingleCampus(props) {
 		              		console.log(`/campus/edit/${currentCampus.id}`)
 		              	}
 		              	<Link to={`/campus/edit/${currentCampus.id}`}>Edit campus</Link>
+		              	<a onClick={()=>{props.handleDelete(campus.id)}}>Delete</a>
 		              </div>
 		          </div>
 		        </div>
@@ -43,6 +45,8 @@ function SingleCampus(props) {
 }
 
 const mapStateToProps = function(state, ownProps) {
+	console.log('trying to map');
+	console.log(ownProps);
 	const id = ownProps.match.params.id;
 	function matchesId(campus) {
 		return campus.id == id;

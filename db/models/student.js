@@ -18,6 +18,6 @@ module.exports = db.define('student', {
   }
 }, {
   defaultScope: {
-    include: [Campus]
+    include: [{model: Campus}]
   }
 });

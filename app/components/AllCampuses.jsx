@@ -14,10 +14,10 @@ function AllCampuses(props) {
 					return (
 						<div key={campus.id} className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
 				          <div className="panel panel-info">
-				            <div className="panel-heading">
+				            <div className="panel-heading" style={{minHeight: 120, maxHeight: 120}}>
 				              <div className="row">
 				              	<div className="col-xs-3">
-				              		<div style={{width: '70', height:'70', overflow: 'hidden'}}>
+				              		<div style={{width: '70px', height:'70px', overflow: 'hidden'}}>
         										<img style={{width: '100%'}} src={campus.image} />
       										</div>
 												</div>
@@ -28,7 +28,7 @@ function AllCampuses(props) {
 				              </div>
 				            </div>
 				            <div>
-				              <div className="panel-footer">
+				              <div className="panel-footer" style={{minHeight: 45, maxHeight: 45}}>
 				              	<div className="row">
 					              	<div className="col-xs-9">
 					              		<Link to={`/campus/${campus.id}`}>View or edit campus</Link>
@@ -47,20 +47,20 @@ function AllCampuses(props) {
 
 		{/*add ADD_CAMPUS button*/}
 		        <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-		          <div className="panel panel-warning">
-			          <Link to="/campus/add">
-			            <div className="panel-heading">
+		          <div className="panel panel-info">
+			            <div className="panel-heading" style={{minHeight: 120, maxHeight: 120}}>
+			            	<Link to="/campus/add">
 			              <div className="row">
-			              	<div className="col-xs-3">
+			              	<div className="col-xs-3 text-center">
   											<span className="glyphicon glyphicon-plus" style={{fontSize: '85px'}}></span>
 											</div>
 											<div className="col-xs-9 text-right">
 					  							<h2>Add campus</h2>
 											</div>
 							      </div>
+							      </Link>
 							    </div>
-							  </Link>
-							  <div className="panel-footer">
+							  <div className="panel-footer" style={{minHeight: 45, maxHeight: 45}}>
 							      
 							  </div>
 							</div>

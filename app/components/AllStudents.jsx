@@ -6,17 +6,16 @@ import {getStudents, postStudent, destroyStudent} from '../store.js';
 
 
 function AllStudents(props) {
-	console.log("currentCampus in allStudents", props.campusId);
 	const campusId = props.campusId;
 	function matchesCampus(student) {
 		return student.campusId == campusId;
 	}
 	const currentStudents = campusId ? props.students.filter(matchesCampus) : props.students;
-
+	console.log("currentStudents in allStudents", currentStudents);
 	return (
 		<div>
 			<div className="row">
-				<form className="form-inline" onSubmit={props.handleSubmit}>
+				<form className="form-inline" onSubmit={(event) => {props.handleSubmit(event, campusId)}}>
 		        <div className="form-group">
 		          <label htmlFor="name">Name:</label>
 		          <input type="text" className="form-control" id="name" onChange={props.handleChange}/>
@@ -47,20 +46,26 @@ function AllStudents(props) {
 					    <tr>
 				          <th>Name</th>
 				          <th>Email</th>
-				          <th>Campus</th>
-				          <th></th>
+				          { campusId ? 
+					            	null
+					            	:
+					            	<th>Campus</th>
+					      }
 				          <th></th>
 					    </tr>
 					</thead>
 					<tbody>
 					{
 						currentStudents.map(student => {
-							console.log(student)
 							return (
 							<tr key={student.id}>
 					            <td>{student.name}</td>
-					            <td>{student.email}</td>
-					            <td>{student.campus.name}</td>
+					            <td>{student.email}</td> 
+					            { campusId ? 
+					            	null
+					            	:
+					            	<td>{student.campus.name}</td>
+					            }
 					            <td>
 					            	<Link to={`/student/${student.id}`}>Edit</Link>
 					            </td>
@@ -82,12 +87,12 @@ function AllStudents(props) {
 const mapStateToProps = function(state) {
  	return {
  		students: state.students,
- 		campuses: state.campuses, 
- 		editStudent: 0
+ 		campuses: state.campuses
  	};
 };
 
 const mapDispatchToProps = function(dispatch, ownProps) {
+
 	return {
 		handleDelete: function(id) {
 			console.log(id);
@@ -104,13 +109,14 @@ const mapDispatchToProps = function(dispatch, ownProps) {
 			console.log(event.target.id);
 			console.log(event.target.value);
 		}, 
-		handleSubmit: function(event) {
+		handleSubmit: function(event, id) {
 			event.preventDefault();
 			const name = event.target.name.value;
 			const email = event.target.email.value;
+			const campusId = id || event.target.campus.value; // from page or drop-down
 			console.log('submit name', event.target.name.value);
 			console.log('submit email', event.target.email.value);
-			const addStudentThunk = postStudent({name: name, email: email});
+			const addStudentThunk = postStudent({name: name, email: email, campusId: campusId});
 			dispatch(addStudentThunk);
 		}
 	};

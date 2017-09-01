@@ -115,6 +115,9 @@ export function postStudent(student) {
 				console.log('from server', newStudent);
 				const action = addStudent(newStudent);
 				dispatch(action);
+			})
+			.then(() => {
+				history.push(`/campus/${student.campusId}`);
 			});
 			// need to push to history?
 	}
@@ -210,7 +213,9 @@ function reducer(state = initialState, action) {
 			return Object.assign({}, state, {campuses: newCampusList});
 		}
 		case ADD_STUDENT: {
+			console.log('in add student', action.student)
 			const newStudentList = state.students.concat([action.student]);
+			console.log('new student list in add student', newStudentList)
 			return Object.assign({}, state, {students: newStudentList});
 		}
 		case EDIT_STUDENT: {
@@ -245,11 +250,17 @@ function reducer(state = initialState, action) {
 			function matchesId(campus) {
 				return campus.id == action.id;
 			}
+			function keepStudent(student) {
+				return student.campusId != action.id;
+			}
 			const idx = state.campuses.findIndex(matchesId);
 			// copy the array and remove one element at the index (doesn't mutate)
 			const newCampusList = state.campuses.slice();
 			newCampusList.splice(idx, 1);
-			return Object.assign({}, state, {campuses: newCampusList});
+
+			const newStudentList = state.students.filter(keepStudent);
+			console.log('studens to keep', newStudentList);
+			return Object.assign({}, state, {campuses: newCampusList, students: newStudentList});
 		}
 		case DELETE_STUDENT: {
 			function matchesId(student) {

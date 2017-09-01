@@ -2,8 +2,8 @@
 const api = require('express').Router()
 const db = require('../db')
 
-const Campus = db.models.campus;
-const Student = db.models.student;
+const Campus = db.model('campus');
+const Student = db.model('student');
 
 // If you aren't getting to this object, but rather the index.html (something with a joke) your path is wrong.
 	// I know this because we automatically send index.html for all requests that don't make sense in our backend.
@@ -55,8 +55,14 @@ api.route('/campuses/:id')
 	// delete a campus (Campus model)
 	.delete(function(req, res) {
 		const id = req.params.id;
-		Campus.destroy({where: {id: id}})
-		.then(() => res.status(200).json(id));
+		console.log('trying to delete', id);
+		Student.destroy({where: {campusId: id}})
+		.then(() => {
+			return Campus.destroy({where: {id: id}});
+		})
+		.then(() => {
+			res.status(200).json(id);
+		});
 	});
 
 api.route('/students')
@@ -66,18 +72,22 @@ api.route('/students')
 		.then(students => res.status(200).json(students));
 	})
 
-	// NOT WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// post new student (Student model)
 	.post(function(req, res) {
 		console.log('in route');
 		console.log('name', req.body.name);
 		console.log('email', req.body.email);
 		console.log('campusId', req.body.campusId);
-		const campusId = req.body.campusId ? req.body.campusId : null;
-		console.log('after ternary', campusId);
-		Student.create({name: req.body.name, email: req.body.email})
-		.then(student => student.setCampus(campusId))
-		.then(student => res.sendStatus(201).json(student))
+		Student.create({
+			name: req.body.name, 
+			email: req.body.email, 
+			campusId: req.body.campusId})
+		.then((student) => {
+			return Student.findById(student.id);
+		})
+		.then(student => {
+			console.log('what i get back from server', student);
+			res.status(200).json(student);
+		})
 		.catch(console.log)
 	})
 
@@ -97,12 +107,11 @@ api.route('/students/:id')
 			campusId: req.body.campus}, 
 			{
 				where: {id: req.params.id}, 
-				// return the element you update
-				returning: true,
-				plain: true
 			})
-		.then(data => {
-			const student = data[1].dataValues;
+		.then(() => {
+			return Student.findById(req.params.id);
+		})
+		.then(student => {
 			console.log('in put request', student);
 			res.status(200).json(student);
 		});
