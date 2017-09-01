@@ -15,7 +15,7 @@ function SingleCampus(props) {
 			<div className="row">
 		        <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12">
 		          <div className="panel panel-info">
-		            <div className="panel-heading">
+		            <div className="panel-heading" style={{minHeight: 120, maxHeight: 120}}>
 		              <div className="row">
 		              	<div className="col-xs-3">
   							<div style={{width: '70', height:'70', overflow: 'hidden'}}>
@@ -28,12 +28,11 @@ function SingleCampus(props) {
 						</div>
 		              </div>
 		            </div>
-		              <div className="panel-footer">
+		              <div className="panel-footer" style={{minHeight: 45, maxHeight: 45}}>
 		              	{
 		              		console.log(`/campus/edit/${currentCampus.id}`)
 		              	}
 		              	<Link to={`/campus/edit/${currentCampus.id}`}>Edit campus</Link>
-		              	<a onClick={()=>{props.handleDelete(campus.id)}}>Delete</a>
 		              </div>
 		          </div>
 		        </div>

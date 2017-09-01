@@ -16,28 +16,26 @@ function AllStudents(props) {
 		<div>
 			<div className="row">
 				<form className="form-inline" onSubmit={(event) => {props.handleSubmit(event, campusId)}}>
-		        <div className="form-group">
-		          <label htmlFor="name">Name:</label>
+		        <div className="form-group" style={{margin: '0px 30px 0px 8px'}}>
+		          <label htmlFor="name" style={{margin: '0px 10px 0px 0px'}}>Name:</label>
 		          <input type="text" className="form-control" id="name" onChange={props.handleChange}/>
 		        </div>
-		        <div className="form-group">
-		          <label htmlFor="email">Email:</label>
-		          <input type="email" className="form-control" id="email" onChange={props.handleChange}/>
+		        <div className="form-group" style={{margin: '0px 30px 0px 0px'}}>
+		          <label htmlFor="email" style={{margin: '0px 10px 0px 0px'}}>Email:</label>
+		          <input type="email" className="form-control" id="email" onChange={props.handleChange} style={{width: '300px'}}/>
 		        </div>
 		          { campusId ? 
-		          	<div className="form-group">
-		          		<label><input type="checkbox" /> Select campus</label>
-		          	</div>
+		          	null
 		          	:
-		          	<div className="form-group">
-		          		<label htmlFor="campus">Select campus:</label>
+		          	<div className="form-group" style={{margin: '0px 30px 0px 8px'}}>
+		          		<label htmlFor="campus" style={{margin: '0px 10px 0px 0px'}}>Select campus:</label>
 		          		<select name="campus"> {
 		          			props.campuses.map(campus => <option key={campus.id} value={campus.id}>{campus.name}</option>)
 		          		}
 						</select>
 					</div>
 		      		}
-		        <button type="submit" className="btn btn-default">Submit</button>
+		        <button type="submit" className="btn btn-default">Add student</button>
 		      </form>
 			</div>
 			<div className="row">
